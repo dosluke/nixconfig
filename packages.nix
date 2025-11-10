@@ -1,0 +1,80 @@
+#declare packages and their options
+
+{ config, pkgs, ... }:
+
+{
+	# Allow unfree packages
+	nixpkgs.config.allowUnfree = true;
+
+    # List packages installed in system profile. To search, run:
+    # $ nix search wget
+    environment.systemPackages = with pkgs; [
+
+#Browser
+      vivaldi
+      librewolf
+
+#Terminal/Utils
+      git
+      lsd
+      btop
+      micro
+      zsh
+      kitty
+      fzf
+      psmisc #provides killall command
+
+#Plasma6
+      plasma-applet-commandoutput
+      kdePackages.kdeplasma-addons
+      
+#Other
+      spice-vdagent #for host/vm clipboard
+      refind
+    ];
+
+
+
+    environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    	konsole
+    	kate
+    	elisa
+    	gwenview
+    	okular
+    ];
+
+
+  programs.kdeconnect.enable = false;
+
+
+  programs.zsh = {
+  	enable = true;
+  	enableCompletion = true;
+  	autosuggestions.enable = true;
+
+  shellInit = ''
+    #disable zsh-newuser-install
+    ZDOTDIR=$HOME
+  '';
+
+  interactiveShellInit = ''
+#shell functions here
+  '';
+
+  loginShellInit = ''
+    [[ ! -f ~/.zshrc ]] && echo "# Managed by NixOS" > ~/.zshrc
+  '';
+
+  	shellAliases = {
+  	    m = "sudo micro";
+  		nx = "cd /etc/nixos/ && lsd";
+  		cls = "clear";
+#  		rebuild = "sudo nixos-rebuild switch --show-trace";
+        rebuild = "sudo /etc/nixos/rebuild.sh";
+  		restart = "killall vivaldi-bin || sudo reboot now";
+  	};
+  };
+
+  	
+
+}
