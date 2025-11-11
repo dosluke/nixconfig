@@ -29,7 +29,7 @@ echo ""
 
 # Backup hardware-configuration.nix if it exists
 if [ -f "hardware-configuration.nix" ]; then
-    echo -e "${GREEN}Backing up hardware-configuration.nix to ${NC}"
+    echo -e "${GREEN}Backing up hardware-configuration.nix${NC}"
     cp hardware-configuration.nix "$TEMP_HARDWARE_CONFIG"
 fi
 
@@ -154,7 +154,7 @@ git status --short
 
 
 echo ""
-echo -e "${GREEN}==> REBUILDING{NC}"
+echo -e "${GREEN}==> REBUILDING${NC}"
 echo ""
 
 sudo nixos-rebuild switch --show-trace \
