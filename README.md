@@ -17,12 +17,7 @@ Press Enter for default location and no passphrase
 2. New SSH key
 3. Paste public key and save
 
-### 3. Remove default configuration.nix
-```bash
-sudo rm -f /etc/nixos/configuration.nix
-```
-
-### 4. Clone and Initialize
+### 3. Clone and Initialize
 
 ```bash
 sudo nix-shell -p git openssh --run "bash <(curl -s https://raw.githubusercontent.com/dosluke/nixconfig/main/rebuild.sh)"
