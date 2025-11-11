@@ -1,4 +1,4 @@
-#To Install
+# To Install
 
 If you are not me, you will want to clone repo, go through several files and change to your info. Im considering consolidating to a single variable file in future.
 
