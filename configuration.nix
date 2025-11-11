@@ -20,11 +20,10 @@ in
   imports =
     [ 
       (import "${home-manager}/nixos")
-      ./packages.nix
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./boot.nix
-#      ./packages.nix
+      ./packages.nix
       ./services.nix
       ./users.nix
       ./plasma.nix

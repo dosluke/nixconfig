@@ -67,7 +67,7 @@
 
   	shellAliases = {
   	    m = "sudo micro";
-  		nx = "cd /etc/nixos/ && lsd";
+  		nx = "cd /etc/nixos/ && lsd -a";
   		cls = "clear";
 #  		rebuild = "sudo nixos-rebuild switch --show-trace";
         rebuild = "sudo /etc/nixos/rebuild.sh";
