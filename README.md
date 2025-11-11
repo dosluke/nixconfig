@@ -22,3 +22,5 @@ Press Enter for default location and no passphrase
 ```bash
 sudo nix-shell -p git openssh --run "bash <(curl -s https://raw.githubusercontent.com/dosluke/nixconfig/main/rebuild.sh)"
 ```
+
+### 4. Reboot
