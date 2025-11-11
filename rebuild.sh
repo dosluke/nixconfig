@@ -5,36 +5,158 @@ NIXOS_DIR="/etc/nixos"
 REPO_URL="git@github.com:dosluke/nixconfig.git"
 GIT_USER_NAME="dosluke"
 GIT_USER_EMAIL="dosluke@gmail.com"
+TEMP_HARDWARE_CONFIG="/tmp/hardware-configuration.nix.backup"
+BRANCH="main"
 
+# Color codes for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
 
-if [ "$EUID" -ne 0 ]; then
-  echo "Error: Please run as root (use sudo)"
+# Check if running as root
+if [ "$EUID" -ne 0 ]; then 
+  echo -e "${RED}Error: Please run as root (use sudo)${NC}"
   exit 1
 fi
 
-
-
 mkdir -p "$NIXOS_DIR"
-cd "$NIXOS_DIR" #VERY IMPORTANT FOR GIT COMMANDS
+cd "$NIXOS_DIR"
 
 echo ""
-echo "==> SYNCING"
+echo "==> SYNCING NIXOS CONFIGURATION"
+echo ""
 
+# Backup hardware-configuration.nix if it exists
+if [ -f "hardware-configuration.nix" ]; then
+    echo -e "${YELLOW}Backing up hardware-configuration.nix${NC}"
+    cp hardware-configuration.nix "$TEMP_HARDWARE_CONFIG"
+fi
 
-git config --global init.defaultBranch main
+# Check if this is already a git repository
+if [ -d ".git" ]; then
+    echo -e "${GREEN}Git repository detected${NC}"
+    
+    # Configure git user
+    git config user.name "$GIT_USER_NAME"
+    git config user.email "$GIT_USER_EMAIL"
+    
+    # Fetch latest changes from remote
+    echo "Fetching from remote..."
+    git fetch origin
+    
+    # Check if there are local changes
+    if ! git diff-index --quiet HEAD -- 2>/dev/null || [ -n "$(git status --porcelain)" ]; then
+        echo -e "${YELLOW}Local changes detected${NC}"
+        
+        # Stage all changes (respecting .gitignore)
+        git add -A
+        
+        # Check if there are staged changes
+        if ! git diff-index --quiet --cached HEAD -- 2>/dev/null; then
+            echo "Committing local changes..."
+            TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+            HOSTNAME=$(hostname)
+            git commit -m "Auto-sync from $HOSTNAME at $TIMESTAMP"
+        fi
+    fi
+    
+    # Check if remote has changes we don't have
+    LOCAL=$(git rev-parse HEAD)
+    REMOTE=$(git rev-parse origin/$BRANCH)
+    
+    if [ "$LOCAL" != "$REMOTE" ]; then
+        echo -e "${YELLOW}Remote changes detected, merging...${NC}"
+        
+        # Try to rebase local commits on top of remote
+        if git rebase origin/$BRANCH; then
+            echo -e "${GREEN}Successfully merged remote changes${NC}"
+        else
+            echo -e "${RED}Merge conflict detected!${NC}"
+            echo "Aborting rebase and trying merge strategy..."
+            git rebase --abort
+            
+            # Fallback to merge
+            if git merge origin/$BRANCH -m "Auto-merge from remote"; then
+                echo -e "${GREEN}Merge completed${NC}"
+            else
+                echo -e "${RED}Automatic merge failed. Manual intervention required.${NC}"
+                echo "Conflict files:"
+                git diff --name-only --diff-filter=U
+                exit 1
+            fi
+        fi
+    else
+        echo -e "${GREEN}Repository is up to date with remote${NC}"
+    fi
+    
+    # Push changes to remote
+    echo "Pushing changes to remote..."
+    if git push origin $BRANCH; then
+        echo -e "${GREEN}Successfully pushed to remote${NC}"
+    else
+        echo -e "${RED}Failed to push to remote. You may need to pull and merge manually.${NC}"
+        exit 1
+    fi
 
-# Initialize git if needed
-git init 2>/dev/null || true
+else
+    echo -e "${YELLOW}No git repository found${NC}"
+    
+    # Check if directory has files (excluding hardware-configuration.nix)
+    if [ -n "$(ls -A | grep -v '^hardware-configuration.nix$')" ]; then
+        echo -e "${YELLOW}Directory contains files. Moving them to temporary location...${NC}"
+        TEMP_DIR="/tmp/nixos_backup_$(date +%s)"
+        mkdir -p "$TEMP_DIR"
+        
+        # Move all files except hardware-configuration.nix
+        for item in *; do
+            if [ "$item" != "hardware-configuration.nix" ]; then
+                mv "$item" "$TEMP_DIR/"
+            fi
+        done
+        
+        echo -e "${YELLOW}Files backed up to: $TEMP_DIR${NC}"
+    fi
+    
+    # Clone the repository
+    echo "Cloning repository..."
+    
+    # Clone into a temporary directory first
+    TEMP_CLONE="/tmp/nixos_clone_$$"
+    git clone "$REPO_URL" "$TEMP_CLONE"
+    
+    # Move .git directory and contents
+    mv "$TEMP_CLONE/.git" ./
+    mv "$TEMP_CLONE/"* ./ 2>/dev/null || true
+    mv "$TEMP_CLONE/".[!.]* ./ 2>/dev/null || true
+    rm -rf "$TEMP_CLONE"
+    
+    # Configure git user
+    git config user.name "$GIT_USER_NAME"
+    git config user.email "$GIT_USER_EMAIL"
+    
+    echo -e "${GREEN}Repository cloned successfully${NC}"
+fi
 
-git config user.name "$GIT_USER_NAME"
-git config user.email "$GIT_USER_EMAIL"
+# Restore hardware-configuration.nix if it was backed up
+if [ -f "$TEMP_HARDWARE_CONFIG" ]; then
+    echo -e "${YELLOW}Restoring hardware-configuration.nix${NC}"
+    cp "$TEMP_HARDWARE_CONFIG" hardware-configuration.nix
+    rm "$TEMP_HARDWARE_CONFIG"
+    
+    # If hardware config changed, commit it
+    if ! git diff-index --quiet HEAD -- hardware-configuration.nix 2>/dev/null; then
+        echo -e "${YELLOW}Hardware configuration changed, but it's in .gitignore${NC}"
+    fi
+fi
 
-git remote add origin "$REPO_URL" 2>/dev/null || git remote set-url origin "$REPO_URL"
-git add -A
-git commit -m "Local changes for rebuild"
-git fetch origin
-git push -u origin main 2>/dev/null || git push -u origin main --force
-git pull --rebase
+echo ""
+echo -e "${GREEN}==> SYNC COMPLETE${NC}"
+echo ""
+
+# Show current status
+echo "Current status:"
+git status --short
 
 
 
