@@ -24,24 +24,22 @@ mkdir -p "$NIXOS_DIR"
 cd "$NIXOS_DIR"
 
 echo ""
-echo "==> SYNCING NIXOS CONFIGURATION"
+echo "==> ${GREEN}SYNCING NIXOS CONFIGURATION${NC}"
 echo ""
 
 # Backup hardware-configuration.nix if it exists
 if [ -f "hardware-configuration.nix" ]; then
-    echo -e "${YELLOW}Backing up hardware-configuration.nix${NC}"
+    echo -e "${GREEN}Backing up hardware-configuration.nix to ${NC}"
     cp hardware-configuration.nix "$TEMP_HARDWARE_CONFIG"
 fi
 
 # Check if this is already a git repository
 if [ -d ".git" ]; then
-    echo -e "${GREEN}Git repository detected${NC}"
+    echo -e "Git repository detected"
     
-    # Configure git user
     git config user.name "$GIT_USER_NAME"
     git config user.email "$GIT_USER_EMAIL"
     
-    # Fetch latest changes from remote
     echo "Fetching from remote..."
     git fetch origin
     
@@ -49,7 +47,7 @@ if [ -d ".git" ]; then
     if ! git diff-index --quiet HEAD -- 2>/dev/null || [ -n "$(git status --porcelain)" ]; then
         echo -e "${YELLOW}Local changes detected${NC}"
         
-        # Stage all changes (respecting .gitignore)
+        # Stage all changes
         git add -A
         
         # Check if there are staged changes
@@ -66,14 +64,14 @@ if [ -d ".git" ]; then
     REMOTE=$(git rev-parse origin/$BRANCH)
     
     if [ "$LOCAL" != "$REMOTE" ]; then
-        echo -e "${YELLOW}Remote changes detected, merging...${NC}"
+        echo -e "Remote changes detected, merging..."
         
         # Try to rebase local commits on top of remote
         if git rebase origin/$BRANCH; then
             echo -e "${GREEN}Successfully merged remote changes${NC}"
         else
             echo -e "${RED}Merge conflict detected!${NC}"
-            echo "Aborting rebase and trying merge strategy..."
+            echo "Aborting rebase and trying merge..."
             git rebase --abort
             
             # Fallback to merge
@@ -93,7 +91,7 @@ if [ -d ".git" ]; then
     # Push changes to remote
     echo "Pushing changes to remote..."
     if git push origin $BRANCH; then
-        echo -e "${GREEN}Successfully pushed to remote${NC}"
+        echo -e "Successfully pushed to remote"
     else
         echo -e "${RED}Failed to push to remote. You may need to pull and merge manually.${NC}"
         exit 1
@@ -143,11 +141,6 @@ if [ -f "$TEMP_HARDWARE_CONFIG" ]; then
     echo -e "${YELLOW}Restoring hardware-configuration.nix${NC}"
     cp "$TEMP_HARDWARE_CONFIG" hardware-configuration.nix
     rm "$TEMP_HARDWARE_CONFIG"
-    
-    # If hardware config changed, commit it
-    if ! git diff-index --quiet HEAD -- hardware-configuration.nix 2>/dev/null; then
-        echo -e "${YELLOW}Hardware configuration changed, but it's in .gitignore${NC}"
-    fi
 fi
 
 echo ""
@@ -155,18 +148,18 @@ echo -e "${GREEN}==> SYNC COMPLETE${NC}"
 echo ""
 
 # Show current status
-echo "Current status:"
 git status --short
 
 
 
 
 echo ""
-echo "==> REBUILDING"
+echo "${GREEN}==> REBUILDING{NC}"
+echo ""
 
 sudo nixos-rebuild switch --show-trace \
 && sudo refind-install --yes \
-&& echo COPYING CUSTOM REFIND CONFIG. THIS IS MANAGED FROM NIXOS CONFIGURATUION \
+&& echo "${GREEN}COPYING CUSTOM REFIND CONFIG. THIS IS MANAGED FROM NIXOS CONFIGURATUION${NC}" \
 && sudo cp /etc/nixos/refind.conf /boot/EFI/refind/refind.conf
 
 
