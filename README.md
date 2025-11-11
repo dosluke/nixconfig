@@ -1,6 +1,8 @@
-# To Install
+# Notes
+- If you are not me, you will want to clone repo, go through several files and change to your info. Im considering consolidating to a single variable file in future.
+- The rebuild and sync is expecting/tested with a seperate partition mounted at /boot and UEFI not bios. Its possible it works in other configurations, but not tested.
 
-If you are not me, you will want to clone repo, go through several files and change to your info. Im considering consolidating to a single variable file in future.
+# To Install
 
 ### 1. Generate SSH Key
 
