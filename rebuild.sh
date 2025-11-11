@@ -16,7 +16,7 @@ NC='\033[0m' # No Color
 
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then 
-  echo -e "${RED}Error: Please run as root (use sudo)${NC}"
+  echo -e "${RED}Error: Please run as root${NC}"
   exit 1
 fi
 
@@ -24,7 +24,7 @@ mkdir -p "$NIXOS_DIR"
 cd "$NIXOS_DIR"
 
 echo ""
-echo "==> ${GREEN}SYNCING NIXOS CONFIGURATION${NC}"
+echo -e "${GREEN}==> SYNCING NIXOS CONFIGURATION${NC}"
 echo ""
 
 # Backup hardware-configuration.nix if it exists
@@ -154,12 +154,12 @@ git status --short
 
 
 echo ""
-echo "${GREEN}==> REBUILDING{NC}"
+echo -e "${GREEN}==> REBUILDING{NC}"
 echo ""
 
 sudo nixos-rebuild switch --show-trace \
 && sudo refind-install --yes \
-&& echo "${GREEN}COPYING CUSTOM REFIND CONFIG. THIS IS MANAGED FROM NIXOS CONFIGURATUION${NC}" \
+&& echo -e "${GREEN}COPYING CUSTOM REFIND CONFIG. THIS IS MANAGED FROM NIXOS CONFIGURATUION${NC}" \
 && sudo cp /etc/nixos/refind.conf /boot/EFI/refind/refind.conf
 
 
