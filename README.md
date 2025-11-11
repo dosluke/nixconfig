@@ -1,6 +1,9 @@
 # Notes
 - If you are not me, you will want to clone repo, go through several files and change to your info. Im considering consolidating to a single variable file in future.
+
 - The rebuild and sync is expecting/tested with a seperate partition mounted at /boot and UEFI not bios. Its possible it works in other configurations, but not tested.
+
+- Refind is a UEFI bootloader and is installed via the rebuild script, which chainloads systemd-boot (enabled in boot.nix). Without systemd-boot, refind is unable to understand nixos generations.
 
 # To Install
 
