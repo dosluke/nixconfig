@@ -58,7 +58,7 @@
 
 
 
-}
+};
 
 {
 	home-manager.backupFileExtension = "backup";
@@ -77,4 +77,4 @@
 	        
 	  };
 
-}
+};
