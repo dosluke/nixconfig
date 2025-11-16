@@ -51,7 +51,8 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-
+#for VM copy pasta
+services.spice-vdagentd.enable = true;
 
   # Enable sound with pipewire.
   security.rtkit.enable = true;
