@@ -19,9 +19,11 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+#relative paths work for files tracked by git
+#absolute paths otherwise
   imports =
     [ 
-      ./hardware-configuration.nix
+      /etc/nixos/hardware-configuration.nix
       ./boot.nix
       ./packages.nix
       ./services.nix
