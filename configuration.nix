@@ -21,8 +21,6 @@
 
   imports =
     [ 
-      (import "${home-manager}/nixos")
-      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./boot.nix
       ./packages.nix
