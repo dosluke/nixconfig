@@ -60,7 +60,7 @@
   interactiveShellInit = ''
 #shell functions here
 c() {
-	cd "$1" && lsd -a
+	sudo chmod -R +rwx "$1" $$ cd "$1" && lsd -a
 }
   '';
 
