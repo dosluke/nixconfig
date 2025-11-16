@@ -166,11 +166,3 @@ sudo nixos-rebuild switch --impure --show-trace --flake /etc/nixos#default \
 
 
 
-if [ ! -d "/boot/EFI/refind/themes/regular" ]; then
-  echo "Installing rEFInd theme..."
-  git clone https://github.com/bobafetthotmail/refind-theme-regular.git /tmp/refind-theme
-  mkdir -p /boot/EFI/refind/themes
-  cp -r /tmp/refind-theme /boot/EFI/refind/themes/regular
-  rm -rf /tmp/refind-theme
-fi
-
