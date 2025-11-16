@@ -159,7 +159,7 @@ echo ""
 
 #without flakes: sudo nixos-rebuild switch --show-trace \
 
-sudo nixos-rebuild switch --show-trace --flake /etc/nixos#default --extra-experimental-features "nix-command flakes" \
+sudo nixos-rebuild switch --show-trace --flake /etc/nixos#default \
 && sudo refind-install --yes \
 && echo -e "${GREEN}COPYING CUSTOM REFIND CONFIG. THIS IS MANAGED FROM NIXOS CONFIGURATUION${NC}" \
 && sudo cp /etc/nixos/refind.conf /boot/EFI/refind/refind.conf
