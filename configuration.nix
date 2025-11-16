@@ -23,7 +23,6 @@
 #absolute paths otherwise
   imports =
     [ 
-      home-manager.nixosModules.home-manager
       /etc/nixos/hardware-configuration.nix
       ./boot.nix
       ./packages.nix
