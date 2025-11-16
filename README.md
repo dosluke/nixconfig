@@ -13,6 +13,8 @@
 
 - On my main system, I keep my boot partition on a seperate drive to try to keep windows (I hate that i have to use it once in a blue moon) from overwriting Refind. This will eventually be the case with these configs as well, as i move closer to switching to NixOS for my main system.
 
+- Normal rebuilding and restarting happens fairly fast, however the first run downloads and enables flakes, which can take some time on a slow connection.
+
 # To Install
 
 ### 1. Generate SSH Key
