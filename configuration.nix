@@ -56,11 +56,6 @@
   # Enable sound with pipewire.
   security.rtkit.enable = true;
 
-
-
-}
-
-{
 	home-manager.backupFileExtension = "backup";
 
 	home-manager.users.me = { pkgs, ... }: {
@@ -76,5 +71,6 @@
 	        '';
 	        
 	  };
+
 
 }
