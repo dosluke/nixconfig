@@ -5,7 +5,7 @@
 
 - The rebuild and sync is expecting/tested with a seperate partition mounted at /boot and UEFI not bios. Its possible it works in other configurations, but not tested.
 
-- Refind is a UEFI bootloader and is installed via the rebuild script, which chainloads systemd-boot (enabled in boot.nix). Without systemd-boot, refind is unable to understand nixos generations.
+- Refind is a UEFI boot manager and is installed via the rebuild script, which chainloads systemd-boot (enabled in boot.nix). Without systemd-boot, refind is unable to understand nixos generations.
 
 - If you do not know what you are doing, please do not use this on your own system. Whether you do or dont know what youre doing, use a VM to test first. Every part of these scripts and configs can be destructive. I have rendered my own VMs almost bricked multiple times, if it wern't for nixos generations.
 
