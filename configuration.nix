@@ -53,6 +53,7 @@
 
 #for VM copy pasta
 services.spice-vdagentd.enable = true;
+services.qemuGuest.enable = true;
 
   # Enable sound with pipewire.
   security.rtkit.enable = true;
