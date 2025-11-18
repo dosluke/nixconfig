@@ -53,9 +53,10 @@ if [ -d ".git" ]; then
         # Check if there are staged changes
         if ! git diff-index --quiet --cached HEAD -- 2>/dev/null; then
             echo "Committing local changes..."
-            TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+            DATESTAMP=$(date '+%Y-%m-%d')
+            TIMESTAMP=$(date '+%H:%M:%S')
             HOSTNAME=$(hostname)
-            git commit -m "sync | $HOSTNAME | $TIMESTAMP"
+            git commit -m "sync | $HOSTNAME | $DATESTAMP | $TIMESTAMP"
         fi
     fi
     
