@@ -28,7 +28,7 @@
       ./packages.nix
       ./services.nix
       ./users.nix
-      ./plasma.nix
+      ./kde.nix
     ];
 
 #some basics not worth moving to their own file yet  
