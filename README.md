@@ -20,8 +20,7 @@
 ### 1. Generate SSH Key
 
 ```bash
-sudo ssh-keygen -t ed25519 -C "dosluke@gmail.com"
-sudo cat /root/.ssh/id_ed25519.pub
+sudo ssh-keygen -t ed25519 -C "dosluke@gmail.com" && sudo cat /root/.ssh/id_ed25519.pub
 ```
 
 Press Enter for default location and no passphrase

@@ -17,6 +17,7 @@
 #Terminal/Utils
       git
       lsd
+      pls
       btop
       micro
       zsh
@@ -72,7 +73,6 @@ c() {
   	    m = "sudo micro";
   		nx = "cd /etc/nixos/ && lsd -a";
   		cls = "clear";
-#  		rebuild = "sudo nixos-rebuild switch --show-trace";
         rebuild = "sudo /etc/nixos/rebuild.sh";
   		restart = "killall vivaldi-bin || sudo reboot now";
   	};
