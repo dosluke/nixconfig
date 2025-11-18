@@ -55,7 +55,7 @@ if [ -d ".git" ]; then
             echo "Committing local changes..."
             TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
             HOSTNAME=$(hostname)
-            git commit -m "Auto-sync from $HOSTNAME at $TIMESTAMP"
+            git commit -m "sync | $HOSTNAME | $TIMESTAMP"
         fi
     fi
     
