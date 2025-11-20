@@ -7,6 +7,7 @@ GIT_USER_NAME="dosluke"
 GIT_USER_EMAIL="dosluke@gmail.com"
 TEMP_HARDWARE_CONFIG="/tmp/hardware-configuration.nix.backup"
 BRANCH="main"
+LOCAL_USER="me"
 
 # Color codes for output
 RED='\033[0;31m'
@@ -183,7 +184,7 @@ info installing packages manually until they are added to nix pkgs or alternates
 info nix-search-cli
 #wrong for plasmoids: nix profile add github:peterldowns/nix-search-cli --refresh
 sudo git clone https://github.com/Davide-sd/shutdown_or_switch /tmp/shutdown_or_switch
-kpackagetool6 -t Plasma/Applet -i /tmp/shutdown_or_switch/package
+sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i /tmp/shutdown_or_switch/package
 sudo rm -rf /tmp/shutdown_or_switch
 
 info DONE
