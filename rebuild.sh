@@ -182,8 +182,8 @@ sudo nixos-rebuild switch --impure --show-trace --flake /etc/nixos#default \
 info installing packages manually until they are added to nix pkgs or alternates are found:
 info nix-search-cli
 #wrong for plasmoids: nix profile add github:peterldowns/nix-search-cli --refresh
-git clone https://github.com/Davide-sd/shutdown_or_switch /tmp/shutdown_or_switch
+sudo git clone https://github.com/Davide-sd/shutdown_or_switch /tmp/shutdown_or_switch
 kpackagetool6 -i /tmp/shutdown_or_switch/package
-rm -rf /tmp/shutdown_or_switch
+sudo rm -rf /tmp/shutdown_or_switch
 
 info DONE
