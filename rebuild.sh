@@ -183,7 +183,7 @@ info installing packages manually until they are added to nix pkgs or alternates
 info nix-search-cli
 #wrong for plasmoids: nix profile add github:peterldowns/nix-search-cli --refresh
 sudo git clone https://github.com/Davide-sd/shutdown_or_switch /tmp/shutdown_or_switch
-kpackagetool6 -i /tmp/shutdown_or_switch/package
+kpackagetool6 -t Plasma/Applet -i /tmp/shutdown_or_switch/package
 sudo rm -rf /tmp/shutdown_or_switch
 
 info DONE
