@@ -189,7 +189,8 @@ info shutdown or switch plasmoid
 sudo rm -rf /tmp/shutdown_or_switch
 sudo git clone https://github.com/Davide-sd/shutdown_or_switch /tmp/shutdown_or_switch
 #running this as sudo without -u results in it not being available for the user account
-sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i /tmp/shutdown_or_switch/package
+sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i /tmp/shutdown_or_switch/package || \
+sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -u /tmp/shutdown_or_switch/package
 sudo rm -rf /tmp/shutdown_or_switch
 
 info DONE
