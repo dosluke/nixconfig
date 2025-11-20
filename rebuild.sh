@@ -166,4 +166,4 @@ sudo nixos-rebuild switch --impure --show-trace --flake /etc/nixos#default \
 && sudo cp /etc/nixos/refind.conf /boot/EFI/refind/refind.conf
 
 
-
+nix profile add github:peterldowns/nix-search-cli --refresh

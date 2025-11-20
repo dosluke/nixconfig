@@ -71,7 +71,7 @@ c() {
 
   	shellAliases = {
   	    m = "sudo micro";
-  		nx = "cd /etc/nixos/ && lsd -a";
+  		nx = "cd /etc/nixos/ && pls -g true";
   		cls = "clear";
         rebuild = "sudo /etc/nixos/rebuild.sh";
   		restart = "killall vivaldi-bin || sudo reboot now";
