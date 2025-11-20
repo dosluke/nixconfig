@@ -14,9 +14,22 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+info() {
+	echo -e "${GREEN}[INFO] $*${NC}"
+}
+
+warn() {
+	echo -e "${YELLOW}[WARN] $*${NC}"
+}
+
+error() {
+	echo -e "${RED}[ERROR] $*${NC}"
+}
+
+
 # Check if running as root
-if [ "$EUID" -ne 0 ]; then 
-  echo -e "${RED}Error: Please run as root${NC}"
+if [ "$EUID" -ne 0 ]; then
+  error Please run as root 
   exit 1
 fi
 
@@ -24,35 +37,35 @@ mkdir -p "$NIXOS_DIR"
 cd "$NIXOS_DIR"
 
 echo ""
-echo -e "${GREEN}==> SYNCING NIXOS CONFIGURATION${NC}"
+info SYNCING NIXOS CONFIGURATION
 echo ""
 
 # Backup hardware-configuration.nix if it exists
 if [ -f "hardware-configuration.nix" ]; then
-    echo -e "${GREEN}Backing up hardware-configuration.nix${NC}"
+    info Backing up hardware-configuration.nix
     cp hardware-configuration.nix "$TEMP_HARDWARE_CONFIG"
 fi
 
 # Check if this is already a git repository
 if [ -d ".git" ]; then
-    echo -e "Git repository detected"
+    info "Git repository detected"
     
     git config user.name "$GIT_USER_NAME"
     git config user.email "$GIT_USER_EMAIL"
     
-    echo "Fetching from remote..."
+    info "Fetching from remote..."
     git fetch origin
     
     # Check if there are local changes
     if ! git diff-index --quiet HEAD -- 2>/dev/null || [ -n "$(git status --porcelain)" ]; then
-        echo -e "${YELLOW}Local changes detected${NC}"
+        warn Local changes detected
         
         # Stage all changes
         git add -A
         
         # Check if there are staged changes
         if ! git diff-index --quiet --cached HEAD -- 2>/dev/null; then
-            echo "Committing local changes..."
+            warn "Committing local changes..."
             DATESTAMP=$(date '+%Y-%m-%d')
             TIMESTAMP=$(date '+%H:%M:%S')
             HOSTNAME=$(hostname)
@@ -65,45 +78,45 @@ if [ -d ".git" ]; then
     REMOTE=$(git rev-parse origin/$BRANCH)
     
     if [ "$LOCAL" != "$REMOTE" ]; then
-        echo -e "Remote changes detected, merging..."
+        warn "Remote changes detected, merging..."
         
         # Try to rebase local commits on top of remote
         if git rebase origin/$BRANCH; then
-            echo -e "${GREEN}Successfully merged remote changes${NC}"
+            info Successfully merged remote changes
         else
-            echo -e "${RED}Merge conflict detected!${NC}"
-            echo "Aborting rebase and trying merge..."
+            warn GIT MERGE CONFLICT
+            warn "Aborting rebase and trying merge..."
             git rebase --abort
             
             # Fallback to merge
             if git merge origin/$BRANCH -m "Auto-merge from remote"; then
-                echo -e "${GREEN}Merge completed${NC}"
+                info Merge completed
             else
-                echo -e "${RED}Automatic merge failed. Manual intervention required.${NC}"
-                echo "Conflict files:"
+                error Automatic merge failed. Manual intervention required.
+                error "Conflict files:"
                 git diff --name-only --diff-filter=U
                 exit 1
             fi
         fi
     else
-        echo -e "${GREEN}Repository is up to date with remote${NC}"
+        info Repository is up to date with remote
     fi
     
     # Push changes to remote
-    echo "Pushing changes to remote..."
+    warn "Pushing changes to remote..."
     if git push origin $BRANCH; then
-        echo -e "Successfully pushed to remote"
+        info "Successfully pushed to remote"
     else
-        echo -e "${RED}Failed to push to remote. You may need to pull and merge manually.${NC}"
+        error Failed to push to remote. You may need to pull and merge manually.
         exit 1
     fi
 
 else
-    echo -e "${YELLOW}No git repository found${NC}"
+    warn No git repository found
     
     # Check if directory has files (excluding hardware-configuration.nix)
     if [ -n "$(ls -A | grep -v '^hardware-configuration.nix$')" ]; then
-        echo -e "${YELLOW}Directory contains files. Moving them to temporary location...${NC}"
+        warn Directory contains files. Moving them to temporary location...
         TEMP_DIR="/tmp/nixos_backup_$(date +%s)"
         mkdir -p "$TEMP_DIR"
         
@@ -114,11 +127,11 @@ else
             fi
         done
         
-        echo -e "${YELLOW}Files backed up to: $TEMP_DIR${NC}"
+        warn "Files backed up to: $TEMP_DIR"
     fi
     
     # Clone the repository
-    echo "Cloning repository..."
+    info "Cloning repository..."
     
     # Clone into a temporary directory first
     TEMP_CLONE="/tmp/nixos_clone_$$"
@@ -134,18 +147,18 @@ else
     git config user.name "$GIT_USER_NAME"
     git config user.email "$GIT_USER_EMAIL"
     
-    echo -e "${GREEN}Repository cloned successfully${NC}"
+    info Repository cloned successfully
 fi
 
 # Restore hardware-configuration.nix if it was backed up
 if [ -f "$TEMP_HARDWARE_CONFIG" ]; then
-    echo -e "${YELLOW}Restoring hardware-configuration.nix${NC}"
+    info Restoring hardware-configuration.nix
     cp "$TEMP_HARDWARE_CONFIG" hardware-configuration.nix
     rm "$TEMP_HARDWARE_CONFIG"
 fi
 
 echo ""
-echo -e "${GREEN}==> SYNC COMPLETE${NC}"
+info SYNC COMPLETE
 echo ""
 
 # Show current status
@@ -155,15 +168,18 @@ git status --short
 
 
 echo ""
-echo -e "${GREEN}==> REBUILDING${NC}"
+info REBUILDING
 echo ""
 
 #without flakes: sudo nixos-rebuild switch --show-trace \
 
 sudo nixos-rebuild switch --impure --show-trace --flake /etc/nixos#default \
+&& info "INSTALLING REFIND" \
 && sudo refind-install --yes \
-&& echo -e "${GREEN}COPYING CUSTOM REFIND CONFIG. THIS IS MANAGED FROM NIXOS CONFIGURATUION${NC}" \
+&& info "COPYING CUSTOM REFIND CONFIG. THIS IS MANAGED FROM NIXOS CONFIGURATUION" \
 && sudo cp /etc/nixos/refind.conf /boot/EFI/refind/refind.conf
 
-
+info installing nix-search-cli
 nix profile add github:peterldowns/nix-search-cli --refresh
+
+info DONE
