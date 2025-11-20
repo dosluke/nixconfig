@@ -182,8 +182,13 @@ sudo nixos-rebuild switch --impure --show-trace --flake /etc/nixos#default \
 
 info installing packages manually until they are added to nix pkgs or alternates are found:
 info nix-search-cli
-#wrong for plasmoids: nix profile add github:peterldowns/nix-search-cli --refresh
+nix profile add github:peterldowns/nix-search-cli --refresh
+
+
+info shutdown or switch plasmoid
+sudo rm -rf /tmp/shutdown_or_switch
 sudo git clone https://github.com/Davide-sd/shutdown_or_switch /tmp/shutdown_or_switch
+#running this as sudo without -u results in it not being available for the user account
 sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i /tmp/shutdown_or_switch/package
 sudo rm -rf /tmp/shutdown_or_switch
 
