@@ -23,6 +23,7 @@
       zsh
       kitty
       fzf
+      tldr
       psmisc #provides killall command
 
 #Plasma6
