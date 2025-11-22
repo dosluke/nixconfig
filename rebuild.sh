@@ -203,7 +203,7 @@ install_plasmoid() {
 sudo rm -rf "$location"
 sudo git clone "$git_url" "$location"
 #running this as sudo without -u results in it not being available for the user account
-#sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i "$location" || \
+sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i "$location$sub_folder" || \
 sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -u "$location$sub_folder"
 sudo rm -rf "$location"
 
