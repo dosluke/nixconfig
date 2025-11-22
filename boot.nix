@@ -14,6 +14,9 @@
 	  plymouth = {
 	  	enable = true;
 	  	theme = "matrix";
+	  	themePackages = [
+	  	  pkgs.plymouth-matrix-theme
+	  	];
 	  };
 	  
 	  # Use latest kernel.
