@@ -13,7 +13,7 @@
       #thanks mipmip, your github showed this while i was exploring
 	  plymouth = {
 	  	enable = true;
-	  	theme = "matrix";
+	  	theme = "solar";
 	  };
 	  
 	  # Use latest kernel.
