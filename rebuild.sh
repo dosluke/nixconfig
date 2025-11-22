@@ -196,7 +196,7 @@ nix profile add github:peterldowns/nix-search-cli --refresh
 
 install_plasmoid() {
 	local pkg_name="$1"
-	local sub_folder="/$2" #depends on the github structure, some in root, some in subfolder
+	local sub_folder="$2" #depends on the github structure, some in root, some in subfolder
 	local git_url="$3"
 	local location="/tmp/$pkg_name$sub_folder"
 
@@ -214,7 +214,7 @@ sudo rm -rf "$location"
 
 info shutdown or switch plasmoid
 
-install_plasmoid shutdown_or_switch package https://github.com/Davide-sd/shutdown_or_switch
+install_plasmoid shutdown_or_switch /package https://github.com/Davide-sd/shutdown_or_switch
 
 #sudo rm -rf /tmp/shutdown_or_switch
 #sudo git clone https://github.com/Davide-sd/shutdown_or_switch /tmp/shutdown_or_switch
