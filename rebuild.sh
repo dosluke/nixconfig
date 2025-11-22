@@ -193,12 +193,43 @@ info nix-search-cli
 nix profile add github:peterldowns/nix-search-cli --refresh
 
 
-info shutdown or switch plasmoid
-sudo rm -rf /tmp/shutdown_or_switch
-sudo git clone https://github.com/Davide-sd/shutdown_or_switch /tmp/shutdown_or_switch
+
+install_plasmoid() {
+	local pkg_name = "$1"
+	local sub_folder = "/$2" #depends on the github structure, some in root, some in subfolder
+	local git_url = "$3"
+	local location = "/tmp/$pkg_name$sub_folder"
+
+sudo rm -rf "$location"
+sudo git clone "$git_url" "$location"
 #running this as sudo without -u results in it not being available for the user account
-sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i /tmp/shutdown_or_switch/package || \
-sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -u /tmp/shutdown_or_switch/package
-sudo rm -rf /tmp/shutdown_or_switch
+#sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i "$location" || \
+sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -u "$location"
+sudo rm -rf "$location"
+
+
+}
+
+
+
+info shutdown or switch plasmoid
+
+install_plasmoid shutdown_or_switch package https://github.com/Davide-sd/shutdown_or_switch
+
+#sudo rm -rf /tmp/shutdown_or_switch
+#sudo git clone https://github.com/Davide-sd/shutdown_or_switch /tmp/shutdown_or_switch
+#running this as sudo without -u results in it not being available for the user account
+#sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i /tmp/shutdown_or_switch/package || \
+#sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -u /tmp/shutdown_or_switch/package
+#sudo rm -rf /tmp/shutdown_or_switch
+
+
+info Tahoe Launcher
+install_plasmoid tahoelauncher "" "https://github.com/EliverLara/TahoeLauncher"
+
+
+
+
+
 
 info DONE

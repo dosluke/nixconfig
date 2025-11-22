@@ -75,7 +75,6 @@ c() {
   	    m = "sudo micro";
   		nx = "cd /etc/nixos/ && pls -g true";
   		cls = "clear";
-  		test-rebuild = "sudo nixos-rebuild switch --impure --show-trace --flake /etc/nixos#default";
         rebuild = "sudo /etc/nixos/rebuild.sh";
   		restart = "killall vivaldi-bin || sudo reboot now";
   	};
