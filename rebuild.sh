@@ -198,13 +198,13 @@ install_plasmoid() {
 	local pkg_name="$1"
 	local sub_folder="$2" #depends on the github structure, some in root, some in subfolder
 	local git_url="$3"
-	local location="/tmp/$pkg_name$sub_folder"
+	local location="/tmp/$pkg_name"
 
 sudo rm -rf "$location"
 sudo git clone "$git_url" "$location"
 #running this as sudo without -u results in it not being available for the user account
 #sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i "$location" || \
-sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -u "$location"
+sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -u "$location$sub_folder"
 sudo rm -rf "$location"
 
 
