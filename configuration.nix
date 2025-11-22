@@ -24,8 +24,8 @@
   imports =
     [ 
       /etc/nixos/hardware-configuration.nix
-      ./boot.nix
       ./packages.nix
+      ./boot.nix
       ./services.nix
       ./users.nix
       ./kde.nix
