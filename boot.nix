@@ -5,6 +5,16 @@
 
 {
 
+
+nix.gc = {
+  automatic = true;
+  #for the VM, if it rolls over an hour, this should trigger
+  dates = "hourly";
+  options = "--delete-older-than 5";
+};
+
+
+
 #boot needs to be systemdboot to handle generations correctly
 #rebuilding via the rebuild shell func will install refind to chainload systemdboot
 
@@ -13,9 +23,9 @@
       #thanks mipmip, your github showed this while i was exploring
 	  plymouth = {
 	  	enable = true;
-	  	theme = "matrix";
+	  	theme = "proxzima";
 	  	themePackages = [
-	  	  pkgs.plymouth-matrix-theme
+	  	  pkgs.plymouth-proxzima-theme
 	  	];
 	  };
 	  

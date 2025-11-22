@@ -34,8 +34,16 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
+
 mkdir -p "$NIXOS_DIR"
 cd "$NIXOS_DIR"
+
+#check that this will build before syncing to github
+if ! sudo nix flake check /etc/nixos --impure; then
+  error ABORTED
+  exit 1
+fi
+
 
 echo ""
 info SYNCING NIXOS CONFIGURATION

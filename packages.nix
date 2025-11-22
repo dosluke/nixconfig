@@ -33,7 +33,7 @@
 #Other
       spice-vdagent #for host/vm clipboard
       refind
-      plymouth-matrix-theme
+      plymouth-proxzima-theme
     ];
 
 
