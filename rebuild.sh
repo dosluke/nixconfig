@@ -195,10 +195,10 @@ nix profile add github:peterldowns/nix-search-cli --refresh
 
 
 install_plasmoid() {
-	local pkg_name = "$1"
-	local sub_folder = "/$2" #depends on the github structure, some in root, some in subfolder
-	local git_url = "$3"
-	local location = "/tmp/$pkg_name$sub_folder"
+	local pkg_name="$1"
+	local sub_folder="/$2" #depends on the github structure, some in root, some in subfolder
+	local git_url="$3"
+	local location="/tmp/$pkg_name$sub_folder"
 
 sudo rm -rf "$location"
 sudo git clone "$git_url" "$location"
