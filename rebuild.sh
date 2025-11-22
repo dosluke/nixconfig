@@ -74,7 +74,7 @@ if [ -d ".git" ]; then
         fi
     fi
     
-    # Check if remote has changes we don't have
+    # Check if remote has changes
     LOCAL=$(git rev-parse HEAD)
     REMOTE=$(git rev-parse origin/$BRANCH)
     
