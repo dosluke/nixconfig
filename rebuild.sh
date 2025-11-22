@@ -212,7 +212,7 @@ sudo rm -rf "$location"
 
 
 
-info shutdown or switch plasmoid
+info Shutdown or Switch plasmoid
 
 install_plasmoid shutdown_or_switch /package https://github.com/Davide-sd/shutdown_or_switch
 
@@ -224,7 +224,7 @@ install_plasmoid shutdown_or_switch /package https://github.com/Davide-sd/shutdo
 #sudo rm -rf /tmp/shutdown_or_switch
 
 
-info Tahoe Launcher
+info Tahoe Launcher plasmoid
 install_plasmoid tahoelauncher "" "https://github.com/EliverLara/TahoeLauncher"
 
 
