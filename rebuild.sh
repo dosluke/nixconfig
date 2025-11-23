@@ -35,8 +35,6 @@ if [ "$EUID" -ne 0 ]; then
 fi
 }
 
-
-
 ensure_root
 
 mkdir -p "$NIXOS_DIR"
@@ -52,9 +50,7 @@ if [ -d ".git" ]; then #dont need to check for build if this hasnt been init yet
   fi
 fi
 
-echo ""
 info SYNCING NIXOS CONFIGURATION
-echo ""
 
 # Backup hardware-configuration.nix if it exists
 if [ -f "hardware-configuration.nix" ]; then
@@ -173,9 +169,7 @@ if [ -f "$TEMP_HARDWARE_CONFIG" ]; then
     rm "$TEMP_HARDWARE_CONFIG"
 fi
 
-echo ""
 info SYNC COMPLETE
-echo ""
 
 # Show current status
 git status --short
@@ -183,9 +177,7 @@ git status --short
 
 
 
-echo ""
 info REBUILDING
-echo ""
 
 #without flakes: sudo nixos-rebuild switch --show-trace \
 
