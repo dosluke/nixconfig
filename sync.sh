@@ -3,6 +3,8 @@ set -e
 
 source ./shared.sh
 
+ensure_root
+
 echo ""
 info SYNCING NIXOS CONFIGURATION
 echo ""

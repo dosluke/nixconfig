@@ -3,12 +3,7 @@ set -e
 
 source ./shared.sh
 
-# Check if running as root
-if [ "$EUID" -ne 0 ]; then
-  error Please run as root 
-  exit 1
-fi
-
+ensure_root
 
 mkdir -p "$NIXOS_DIR"
 cd "$NIXOS_DIR"

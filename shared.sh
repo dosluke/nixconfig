@@ -27,3 +27,11 @@ warn() {
 error() {
 	echo -e "${RED}[ERROR] $*${NC}"
 }
+
+ensure_root()
+{
+if [ "$EUID" -ne 0 ]; then
+  error Please run as root 
+  exit 1
+fi
+}
