@@ -43,7 +43,7 @@ mkdir -p "$NIXOS_DIR"
 cd "$NIXOS_DIR"
 
 #check that this will build before syncing to github
-if ! sudo nix flake check /etc/nixos --impure --show-trace; then
+if ! sudo nix flake check /etc/nixos --impure --show-trace --extra-experimental-features nix-command; then
   error ABORTED
   exit 1
 fi
