@@ -43,11 +43,14 @@ mkdir -p "$NIXOS_DIR"
 cd "$NIXOS_DIR"
 
 #check that this will build before syncing to github
-if ! sudo nix flake check /etc/nixos --impure --show-trace --extra-experimental-features nix-command; then
-  error ABORTED
-  exit 1
-fi
+#extra features needed for when a new machine downloads for first time
 
+if [ -d ".git" ]; then #dont need to check for build if this hasnt been init yet
+  if ! sudo nix flake check /etc/nixos --impure --show-trace --extra-experimental-features "nix-command flakes"; then
+    error ABORTED
+    exit 1
+  fi
+fi
 
 echo ""
 info SYNCING NIXOS CONFIGURATION
