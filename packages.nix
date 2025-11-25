@@ -74,7 +74,7 @@ c() {
   	shellAliases = {
   	    m = "sudo micro";
   		cls = "clear";
-        nx = "sudo source /etc/nixos/nx.sh";
+        nx = "cd /etc/nixos/ && sudo ./nx.sh";
   		restart = "killall vivaldi-bin || sudo reboot now";
   	};
   };
