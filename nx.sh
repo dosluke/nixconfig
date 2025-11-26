@@ -93,7 +93,7 @@ case "$CMD" in
 	pls -g true
 	;;
 
-	"buildonly")
+	"build-only")
 	build
 	;;
 	

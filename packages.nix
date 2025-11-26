@@ -1,19 +1,10 @@
-#declare packages and their options
 
-{ config, pkgs, ... }:
-
-{
-	# Allow unfree packages
+{ config, pkgs, ... } : {
 	nixpkgs.config.allowUnfree = true;
-
-    # List packages installed in system profile. To search, run:
-    # $ nix search wget
     environment.systemPackages = with pkgs; [
-
 #Browser
       vivaldi
       librewolf
-
 #Terminal/Utils
       git
       lsd
@@ -25,19 +16,14 @@
       fzf
       tldr
       psmisc #provides killall command
-
 #Plasma6
       plasma-applet-commandoutput
       kdePackages.kdeplasma-addons
-      
 #Other
       spice-vdagent #for host/vm clipboard
       refind
       plymouth-proxzima-theme
     ];
-
-
-
     environment.plasma6.excludePackages = with pkgs.kdePackages; [
     	konsole
     	kate
@@ -45,11 +31,7 @@
     	gwenview
     	okular
     ];
-
-
   programs.kdeconnect.enable = false;
-
-
   programs.zsh = {
   	enable = true;
   	enableCompletion = true;
@@ -78,7 +60,4 @@ c() {
   		restart = "killall vivaldi-bin || sudo reboot now";
   	};
   };
-
-  	
-
 }

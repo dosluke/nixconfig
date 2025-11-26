@@ -1,9 +1,5 @@
-#users
 
-{ config, pkgs, ... }:
-
-{
-	  # Define a user account. Don't forget to set a password with ‘passwd’.
+{ config, pkgs, ... } : {
 	  users.users.me = {
 	    isNormalUser = true;
 	    description = "me";
