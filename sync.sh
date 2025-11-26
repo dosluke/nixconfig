@@ -35,7 +35,7 @@ info SYNCING NIXOS CONFIGURATION
     LOCAL=$(git rev-parse HEAD)
     REMOTE=$(git rev-parse origin/$BRANCH)
 
-    info LOCAL: $LOCAL
+    info LOCAL : $LOCAL
     info REMOTE: $REMOTE
     
     if [ "$LOCAL" != "$REMOTE" ]; then
