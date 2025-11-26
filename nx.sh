@@ -53,7 +53,7 @@ if [ ! -d ".git" ]; then
     git clone "$REPO_URL" "$TEMP_CLONE"
     
     # Move .git directory and contents
-    mv "$TEMP_CLONE/.git" ./
+    mv "$TEMP_CLONE/.git" ./.git
     mv "$TEMP_CLONE/"* ./ 2>/dev/null || true
     mv "$TEMP_CLONE/".[!.]* ./ 2>/dev/null || true
     rm -rf "$TEMP_CLONE"
