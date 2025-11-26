@@ -67,7 +67,22 @@ fi
 
 
 
-#cd /etc/nixos/ && pls -g true
+NUKE_CONFIG() #used for testing initial conditions when syncing
+{
+	error "NUKING NIXOS CONFIG $NIXOS_DIR"
+	error 5
+	sleep 1
+	error 4
+	sleep 1
+	error 3
+	sleep 1
+	error 2
+	sleep 1
+	error 1
+	cd "$NIXOS_DIR"
+	rm -rf ./*
+}
+
 
 source ./build.sh
 source ./sync.sh
@@ -85,6 +100,10 @@ case "$CMD" in
 
 	"sync")
 	sync
+	;;
+
+	"NUKE")
+	NUKE_CONFIG
 	;;
 
 	*)
