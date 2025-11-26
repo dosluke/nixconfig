@@ -47,6 +47,10 @@
 c() {
 	cd "$1" && pls -g true
 }
+restart() {
+	sudo killall vivaldi-bin || true
+	sudo reboot now
+}
   '';
 
   loginShellInit = ''
@@ -57,7 +61,6 @@ c() {
   	    m = "sudo micro";
   		cls = "clear";
         nx = "cd /etc/nixos/ && sudo ./nx.sh";
-  		restart = "killall vivaldi-bin || sudo reboot now";
   	};
   };
 }
