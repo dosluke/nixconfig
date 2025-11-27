@@ -81,6 +81,7 @@ NUKE_CONFIG() #used for testing initial conditions when syncing
 	error 1
 	cd "$NIXOS_DIR"
 	rm -rf ./*
+	rm -rf ./.*
 }
 
 
