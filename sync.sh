@@ -1,15 +1,27 @@
 #!/usr/bin/env bash
 set -e
 
+set-git-info() {
+    git config user.name "$GIT_USER_NAME"
+    git config user.email "$GIT_USER_EMAIL"
+    git remote set-url origin "$REPO_URL"
+}
+
+commit-local() {
+	    warn "Committing local changes..."
+	    DATESTAMP=$(date '+%Y-%m-%d')
+	    TIMESTAMP=$(date '+%H:%M:%S')
+	    HOSTNAME=$(hostname)
+	    git add -A
+	    git commit -m "sync | $HOSTNAME | $DATESTAMP | $TIMESTAMP"
+}
+
 
 sync() {
 
 info SYNCING NIXOS CONFIGURATION
 
-    
-    git config user.name "$GIT_USER_NAME"
-    git config user.email "$GIT_USER_EMAIL"
-    git remote set-url origin "$REPO_URL"
+    set-git-info
     
     info "Fetching from remote..."
     git fetch origin
@@ -23,11 +35,7 @@ info SYNCING NIXOS CONFIGURATION
         
         # Check if there are staged changes
         if ! git diff-index --quiet --cached HEAD -- 2>/dev/null; then
-            warn "Committing local changes..."
-            DATESTAMP=$(date '+%Y-%m-%d')
-            TIMESTAMP=$(date '+%H:%M:%S')
-            HOSTNAME=$(hostname)
-            git commit -m "sync | $HOSTNAME | $DATESTAMP | $TIMESTAMP"
+          commit-local
         fi
     fi
     

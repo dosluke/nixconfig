@@ -9,8 +9,14 @@ info REBUILDING
 
 #without flakes: sudo nixos-rebuild switch --show-trace \
 
-sudo nixos-rebuild switch --impure --show-trace --flake /etc/nixos#default \
-&& info "INSTALLING REFIND" \
+sudo nixos-rebuild switch --impure --show-trace --flake /etc/nixos#default
+
+if [ $? -ne 0 ]; then
+  error BUILD FAILED, ABORTING
+  exit 1
+fi
+
+info "INSTALLING REFIND" \
 && sudo refind-install --yes \
 && info "COPYING CUSTOM REFIND CONFIG. THIS IS MANAGED FROM NIXOS CONFIGURATUION" \
 && sudo cp /etc/nixos/refind.conf /boot/EFI/refind/refind.conf

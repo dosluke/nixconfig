@@ -12,6 +12,7 @@
       ./services.nix
       ./users.nix
       ./kde.nix
+      ./home-man.nix
     ];
 
 #some basics not worth moving to their own file yet  
@@ -34,21 +35,6 @@
 
 #Enable sound with pipewire.
   security.rtkit.enable = true;
-
-	home-manager.backupFileExtension = "backup";
-
-	home-manager.users.me = { pkgs, ... } : {
-	
-	    home.stateVersion = "25.05";
-	    home.file.".config/autostart/kitty.desktop".text = ''
-	          [Desktop Entry]
-	          Type=Application
-	          Exec=kitty
-	          Name=Kitty
-	          X-KDE-autostart-phase=2
-	        '';
-	        
-	  };
 
   # This value determines the NixOS release from which the default
   # This value determines the NixOS release from which the default

@@ -94,10 +94,12 @@ case "$CMD" in
 	;;
 
 	"build-only")
+	commit-local
 	build
 	;;
 	
 	"build")
+	commit-local
 	build
 	sync
 	;;
