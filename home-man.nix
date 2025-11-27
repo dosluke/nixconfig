@@ -13,7 +13,5 @@
 	          Name=Kitty
 	          X-KDE-autostart-phase=2
 	        '';
-	        
 	  };
-
 }
