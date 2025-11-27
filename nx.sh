@@ -63,6 +63,9 @@ if [ ! -d ".git" ]; then #first time, supposedly fresh system
     git config user.email "$GIT_USER_EMAIL"
     
     info Repository cloned successfully
+
+    source ./build.sh
+    build
 fi
 
 
