@@ -12,7 +12,7 @@
       ./services.nix
       ./users.nix
       ./kde.nix
-      ./home-man.nix
+      ./home.nix
     ];
 
 #some basics not worth moving to their own file yet  

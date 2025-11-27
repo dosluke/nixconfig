@@ -1,6 +1,8 @@
 
 { config, pkgs, ... } : {
 
+    programs.home-manager.enable = true;
+
 	home-manager.backupFileExtension = "backup";
 
 	home-manager.users.me = { pkgs, ... } : {
