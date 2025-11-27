@@ -15,6 +15,7 @@
       kitty
       fzf
       tldr
+      batcat
       psmisc #provides killall command
 #Plasma6
       plasma-applet-commandoutput
