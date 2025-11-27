@@ -6,14 +6,19 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";  # Use same nixpkgs as system
     };
+    plasma-manager.url = "github:nix-community/plasma-manager";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } : {
+  outputs = { self, nixpkgs, home-manager, plasma-manager, ... } : {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
-        home-manager.nixosModules.home-manager
+        home-manager.nixosModules.home-manager {
+        	home-manager.sharedModules = [
+        		plasma-manager.homeManagerModules.plasma-manager
+        	];
+        }
       ];
     };
   };
