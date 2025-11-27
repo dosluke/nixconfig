@@ -44,7 +44,7 @@ if [ -f "hardware-configuration.nix" ]; then
 fi
 
 
-if [ ! -d ".git" ]; then
+if [ ! -d ".git" ]; then #first time, supposedly fresh system
 
     info "Cloning repository..."
     
@@ -63,6 +63,9 @@ if [ ! -d ".git" ]; then
     git config user.email "$GIT_USER_EMAIL"
     
     info Repository cloned successfully
+
+    source ./build.sh
+    build
 fi
 
 
