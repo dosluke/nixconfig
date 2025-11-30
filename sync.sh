@@ -68,19 +68,21 @@ info SYNCING NIXOS CONFIGURATION
                 exit 1
             fi
         fi
+
+      # Push changes to remote
+      warn "Pushing changes to remote..."
+      if git push origin $BRANCH; then
+          info "Successfully pushed to remote"
+      else
+          error Failed to push to remote. You may need to pull and merge manually.
+          exit 1
+      fi
+
+        
     else
         info Repository is up to date with remote
     fi
     
-    # Push changes to remote
-    warn "Pushing changes to remote..."
-    if git push origin $BRANCH; then
-        info "Successfully pushed to remote"
-    else
-        error Failed to push to remote. You may need to pull and merge manually.
-        exit 1
-    fi
-
 info SYNC COMPLETE
 
 # Show current status
