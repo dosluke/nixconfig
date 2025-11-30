@@ -34,7 +34,7 @@ Press Enter for default location and no passphrase
 ### 3. Clone and Initialize
 
 ```bash
-sudo nix-shell -p git jq --run "bash <(curl -s https://raw.githubusercontent.com/dosluke/nixconfig/main/nx.sh) build"
+sudo nix-shell -p git jq --run "bash <(curl -s https://raw.githubusercontent.com/dosluke/nixconfig/main/nx.sh) build-only"
 ```
 
 ### 4. Reboot
