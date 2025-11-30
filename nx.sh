@@ -103,7 +103,7 @@ case "$CMD" in
 	;;
 	
 	"build")
-	commit-local
+	commit-local || true
 	build
 	sync
 	;;
