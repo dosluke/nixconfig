@@ -52,7 +52,7 @@ info SYNCING NIXOS CONFIGURATION
         
         # Try to rebase local commits on top of remote
         if git rebase origin/$BRANCH; then
-            info Successfully merged remote changes
+            info Successfully merged changes
         else
             warn GIT MERGE CONFLICT
             warn "Aborting rebase and trying merge..."
