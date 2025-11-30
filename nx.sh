@@ -130,6 +130,7 @@ case "$CMD" in
 	;;
 
 	"diff")
+	info git diff:
 	sudo git diff || true
 	;;
 
