@@ -4,7 +4,7 @@
     environment.systemPackages = with pkgs; [
 #Browser
       vivaldi
-      librewolf
+#      librewolf #takes freakin forever to build
 #Terminal/Utils
       git
       lsd
