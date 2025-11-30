@@ -23,7 +23,7 @@ warn() { echo -e "${YELLOW}[WARN] $*${NC}"
 error() { echo -e "${RED}[ERROR] $*${NC}" 
 }
 
-ensure_root()
+ensure-root()
 {
 if [ "$EUID" -ne 0 ]; then
   error Please run as root 
@@ -31,7 +31,16 @@ if [ "$EUID" -ne 0 ]; then
 fi
 }
 
-ensure_root
+show-dir()
+{
+	if command -v pls >/dev/null 2>&1; then
+	  pls -g true
+	else
+	  ls -a
+	fi
+}
+
+ensure-root
 
 mkdir -p "$NIXOS_DIR"
 cd "$NIXOS_DIR"
@@ -70,7 +79,7 @@ fi
 
 
 
-NUKE_CONFIG() #used for testing initial conditions when syncing
+NUKE-CONFIG() #used for testing initial conditions when syncing
 {
 	error "NUKING NIXOS CONFIG $NIXOS_DIR"
 	error 5
@@ -94,26 +103,34 @@ source ./sync.sh
 case "$CMD" in
 
 	"")
-	pls -g true || ls -a
+    show-dir
 	;;
 
 	"build-only")
 	commit-local || true
-	build
+	build || true
 	;;
 	
 	"build")
 	commit-local || true
 	build
-	sync
+	sync || true
 	;;
 
 	"sync")
-	sync
+	sync || true
+	;;
+
+	"commit-local")
+	commit-local || true
 	;;
 
 	"NUKE")
-	NUKE_CONFIG
+	NUKE-CONFIG || true
+	;;
+
+	"diff")
+	sudo git diff || true
 	;;
 
 	*)
