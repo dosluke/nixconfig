@@ -48,7 +48,7 @@ info SYNCING NIXOS CONFIGURATION
     info REMOTE: $REMOTE
     
     if [ "$LOCAL" != "$REMOTE" ]; then
-        warn "Remote changes detected, merging..."
+        warn "LOCAL != REMOTE, merging..."
         
         # Try to rebase local commits on top of remote
         if git rebase origin/$BRANCH; then
