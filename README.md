@@ -1,5 +1,5 @@
 # Notes - READ
-- If you are not me, you will want to clone repo, go through several files and change to your info. Im considering consolidating to a single variable file in future.
+- If you are not me, you will want to clone repo, go through vars.json and change what you need, also the url in the README instructions.
 
 - This repo is primarily for me, though I may update things for others if it aligns/is congruent to my own OS.
 
@@ -34,7 +34,7 @@ Press Enter for default location and no passphrase
 ### 3. Clone and Initialize
 
 ```bash
-sudo nix-shell -p git openssh --run "bash <(curl -s https://raw.githubusercontent.com/dosluke/nixconfig/main/nx.sh build)"
+sudo nix-shell -p git jq --run "R=https://raw.githubusercontent.com/dosluke/nixconfig/main; export NXVARSJSON=$(curl -s $R/vars.json); bash <(curl -s $R/nx.sh) build"
 ```
 
 ### 4. Reboot
