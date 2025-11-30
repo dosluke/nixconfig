@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-
+#testing what happens if i change remotely
 CMD="$1"
 # Color codes for output
 RED='\033[0;31m'
