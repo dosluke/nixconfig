@@ -94,7 +94,7 @@ source ./sync.sh
 case "$CMD" in
 
 	"")
-	pls -g true
+	pls -g true || ls -a
 	;;
 
 	"build-only")
