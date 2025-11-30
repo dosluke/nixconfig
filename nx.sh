@@ -98,7 +98,7 @@ case "$CMD" in
 	;;
 
 	"build-only")
-	commit-local
+	commit-local || true
 	build
 	;;
 	
