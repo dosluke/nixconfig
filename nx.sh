@@ -143,7 +143,7 @@ case "$CMD" in
 
 	"diff")
 	info git diff:
-	sudo git diff || true
+	sudo git diff || info Detected none
 	;;
 
 	"check")
