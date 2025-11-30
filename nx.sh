@@ -2,14 +2,6 @@
 set -e
 
 CMD="$1"
-NIXOS_DIR="/etc/nixos"
-REPO_URL="git@github.com:dosluke/nixconfig.git"
-GIT_USER_NAME="dosluke"
-GIT_USER_EMAIL="dosluke@gmail.com"
-TEMP_HARDWARE_CONFIG="/tmp/hardware-configuration.nix.backup"
-BRANCH="main"
-LOCAL_USER="me"
-
 # Color codes for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -31,6 +23,24 @@ if [ "$EUID" -ne 0 ]; then
 fi
 }
 
+ensure-root
+
+
+if [ -f "vars.json" ]; then
+  NXVARSJSON=$(cat vars.json)
+elif [ -z "$NXVARSJSON" ]; then
+  error vars.json doesnt exist and NXVARSJSON has not been exported
+  exit 1
+fi
+
+info Using vars:
+echo $NXVARSJSON | jq || exit 1 #should exit if json is malformed
+
+get-var() {
+	echo "$NXVARSJSON" | jq -r ".$1"
+}
+
+
 show-dir()
 {
 	if command -v pls >/dev/null 2>&1; then
@@ -40,16 +50,15 @@ show-dir()
 	fi
 }
 
-ensure-root
 
-mkdir -p "$NIXOS_DIR"
-cd "$NIXOS_DIR"
+mkdir -p "$(get-var nixosDir)"
+cd "$(get-var nixosDir)"
 
 
 # Backup hardware-configuration.nix if it exists
 if [ -f "hardware-configuration.nix" ]; then
     info Backing up hardware-configuration.nix
-    cp hardware-configuration.nix "$TEMP_HARDWARE_CONFIG"
+    cp hardware-configuration.nix "$(get-var tempHardwareConfPath)"
 fi
 
 
@@ -59,7 +68,7 @@ if [ ! -d ".git" ]; then #first time, supposedly fresh system
     
     # Clone into a temporary directory first
     TEMP_CLONE="/tmp/nixos_clone_$$"
-    git clone "$REPO_URL" "$TEMP_CLONE"
+    git clone "$(get-var repoUrl)" "$TEMP_CLONE"
     
     # Move .git directory and contents
     mv "$TEMP_CLONE/.git" ./.git
@@ -68,20 +77,17 @@ if [ ! -d ".git" ]; then #first time, supposedly fresh system
     rm -rf "$TEMP_CLONE"
     
     # Configure git user
-    git config user.name "$GIT_USER_NAME"
-    git config user.email "$GIT_USER_EMAIL"
+    git config user.name "$(get-var gitUserName)"
+    git config user.email "$(get-var gitUserEmail)"
     
     info Repository cloned successfully
-
-    source ./build.sh
-    build
 fi
 
 
 
 NUKE-CONFIG() #used for testing initial conditions when syncing
 {
-	error "NUKING NIXOS CONFIG $NIXOS_DIR"
+	error "NUKING NIXOS CONFIG $(get-var nixosDir)"
 	error 5
 	sleep 1
 	error 4
@@ -91,7 +97,7 @@ NUKE-CONFIG() #used for testing initial conditions when syncing
 	error 2
 	sleep 1
 	error 1
-	cd "$NIXOS_DIR"
+	cd "$(get-var nixosDir)"
 	rm -rf ./*
 	rm -rf ./.*
 }
@@ -99,6 +105,7 @@ NUKE-CONFIG() #used for testing initial conditions when syncing
 
 source ./build.sh
 source ./sync.sh
+
 
 case "$CMD" in
 
@@ -141,12 +148,11 @@ case "$CMD" in
 esac
 
 
-
 # Restore hardware-configuration.nix if it was backed up
-if [ -f "$TEMP_HARDWARE_CONFIG" ]; then
+if [ -f "$(get-var tempHardwareConfPath)" ]; then
     info Restoring hardware-configuration.nix
-    cp "$TEMP_HARDWARE_CONFIG" hardware-configuration.nix
-    rm "$TEMP_HARDWARE_CONFIG"
+    cp "$(get-var tempHardwareConfPath)" hardware-configuration.nix
+    rm "$(get-var tempHardwareConfPath)"
 fi
 
 

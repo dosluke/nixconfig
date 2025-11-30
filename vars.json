@@ -1,0 +1,9 @@
+{
+	"localUser": "me",
+	"nixosDir": "/etc/nixos",
+	"repoUrl": "git@github.com:dosluke/nixconfig.git",
+	"gitUserName": "dosluke",
+	"gitUserEmail": "dosluke@gmail.com",
+	"gitBranch": "main",
+	"tempHardwareConfPath": "/tmp/hardware-configuration.nix.backup"
+}

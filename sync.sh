@@ -2,9 +2,9 @@
 set -e
 
 set-git-info() {
-    git config user.name "$GIT_USER_NAME"
-    git config user.email "$GIT_USER_EMAIL"
-    git remote set-url origin "$REPO_URL"
+    git config user.name "$(get-var gitUserName)"
+    git config user.email "$(get-var gitUserEmail)"
+    git remote set-url origin "$(get-var repoUrl)"
 }
 
 commit-local() {
@@ -38,8 +38,9 @@ info SYNCING NIXOS CONFIGURATION
           commit-local
         fi
     fi
-    
+        
     # Check if remote has changes
+	BRANCH=$(get-var gitBranch)
     LOCAL=$(git rev-parse HEAD)
     REMOTE=$(git rev-parse origin/$BRANCH)
 

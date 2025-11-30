@@ -26,7 +26,6 @@ info nix-search-cli
 nix profile add github:peterldowns/nix-search-cli --refresh
 
 
-
 install_plasmoid() {
 	local pkg_name="$1"
 	local sub_folder="$2" #depends on the github structure, some in root, some in subfolder
@@ -36,13 +35,12 @@ install_plasmoid() {
 sudo rm -rf "$location"
 sudo git clone "$git_url" "$location"
 #running this as sudo without -u results in it not being available for the user account
-sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -i "$location$sub_folder" || \
-sudo -u "$LOCAL_USER" kpackagetool6 -t Plasma/Applet -u "$location$sub_folder"
+sudo -u "$(get-var localUser)" kpackagetool6 -t Plasma/Applet -i "$location$sub_folder" || \
+sudo -u "$(get-var localUser)" kpackagetool6 -t Plasma/Applet -u "$location$sub_folder"
 sudo rm -rf "$location"
 
 
 }
-
 
 
 info Shutdown or Switch plasmoid

@@ -6,6 +6,7 @@
       vivaldi
 #      librewolf #takes freakin forever to build
 #Terminal/Utils
+      jq
       git
       lsd
       pls
@@ -51,6 +52,9 @@ c() {
 restart() {
 	sudo killall vivaldi-bin || true
 	sudo reboot now
+}
+new() {
+	touch "$1" >/dev/null 2>&1 || sudo touch "$1"
 }
   '';
 
