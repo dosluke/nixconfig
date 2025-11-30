@@ -57,4 +57,7 @@ install_plasmoid shutdown_or_switch /package https://github.com/Davide-sd/shutdo
 
 info Tahoe Launcher plasmoid
 install_plasmoid tahoelauncher "" "https://github.com/EliverLara/TahoeLauncher"
+
+
+info Restart/relog for everything to take effect
 }

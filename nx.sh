@@ -28,9 +28,8 @@ ensure-root
 
 if [ -f "vars.json" ]; then
   NXVARSJSON=$(cat vars.json)
-elif [ -z "$NXVARSJSON" ]; then
-  error vars.json doesnt exist and NXVARSJSON has not been exported
-  exit 1
+else
+  NXVARSJSON=$(curl -s https://raw.githubusercontent.com/dosluke/nixconfig/main/vars.json)
 fi
 
 info Using vars:

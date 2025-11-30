@@ -66,6 +66,7 @@ new() {
   	    m = "sudo micro";
   		cls = "clear";
         nx = "cd /etc/nixos/ && sudo ./nx.sh";
+        del = "sudo rm -rf";
   	};
   };
 }
