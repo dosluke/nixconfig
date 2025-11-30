@@ -1,4 +1,6 @@
-
+let
+  vars = builtins.fromJSON (builtins.readFile ./vars.json);
+in
 { config, pkgs, ... } : {
 	nixpkgs.config.allowUnfree = true;
     environment.systemPackages = with pkgs; [

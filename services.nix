@@ -1,4 +1,6 @@
-
+let
+  vars = builtins.fromJSON (builtins.readFile ./vars.json);
+in
 { config, pkgs, ... } : {
   services = {
         # Enable CUPS to print documents.
@@ -11,7 +13,7 @@
 	      sddm.autoLogin.relogin = true;
 		  autoLogin = {
 		   enable = true;
-		   user = "me";
+		   user = "${vars.localUser}";
 		   };
          };
          

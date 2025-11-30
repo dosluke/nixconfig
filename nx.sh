@@ -32,8 +32,14 @@ else
   NXVARSJSON=$(curl -s https://raw.githubusercontent.com/dosluke/nixconfig/main/vars.json)
 fi
 
-info Using vars:
-echo $NXVARSJSON | jq || exit 1 #should exit if json is malformed
+malformed-json() {
+	error Malformed JSON in vars.json
+	cat vars.json
+	exit 1
+}
+
+info Using vars.json:
+echo $NXVARSJSON | jq || malformed-json #should exit if json is malformed
 
 get-var() {
 	echo "$NXVARSJSON" | jq -r ".$1"
@@ -138,6 +144,10 @@ case "$CMD" in
 	"diff")
 	info git diff:
 	sudo git diff || true
+	;;
+
+	"check")
+	sudo nix flake check --impure --show-trace && info PASS
 	;;
 
 	*)

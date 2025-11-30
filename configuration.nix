@@ -8,7 +8,7 @@ in
 #relative paths work for files tracked by git
 #absolute paths otherwise
   imports = [ 
-      /etc/nixos/hardware-configuration.nix
+       /etc/nixos/hardware-configuration.nix
       ./packages.nix
       ./boot.nix
       ./services.nix
